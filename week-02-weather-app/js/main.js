@@ -1,17 +1,60 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { getJSON } from './util';
+import { displayForecast, displayWeather, getJSON } from './util';
 
+/**
+ * Simple weather display application for demonstrating async for JSON and
+ * best practices for JavaScript development.  The script makes use of the
+ * OpenWeatherMap weather API.
+ */
+
+/**
+ * @const {string} BASE_ENDPOINT
+ */
 const BASE_ENDPOINT = 'https://api.openweathermap.org/data/2.5/';
-const API_KEY = '52fc99a956494caea7b135022179925e';
-const city = 'Edmonton';
-const currentWeatherEndpoint = `${BASE_ENDPOINT}weather?units=metric&q=${city}&appid=${API_KEY}`;
+/**
+ * @const {string} API_KEY
+ */
+const API_KEY = 'YOUR_API_KEY_HERE';
 
-getJSON(currentWeatherEndpoint).then((data) => {
-  console.log(data);
-});
+document
+  .querySelector('.frm.weather')
+  .addEventListener('submit', async (evt) => {
+    evt.preventDefault();
 
-// TODO: create an event listener on the form (submit) and call
-// getJSON for weather and forecast.
+    const location = evt.target.elements['location'].value.trim();
 
-// TODO: create functions to display the weather and forecast in the util.js
-// file, import them here and call with the appropriate data.
+    // The following relies on Bootstrap classes. You will need to
+    // add additional classes to the HTML elements to get the full
+    // effect of the validation classes. This works, but is a little
+    // janky, you'll see.
+    if (location === '') {
+      evt.target.elements['location'].classList.add(
+        'form-control',
+        'is-invalid'
+      );
+    } else {
+      evt.target.elements['location'].classList.remove(
+        'form-control',
+        'is-invalid'
+      );
+
+      const currentWeatherEndpoint = `${BASE_ENDPOINT}weather?units=metric&q=${location}&appid=${API_KEY}`;
+      const weatherForecastEndpoint = `${BASE_ENDPOINT}forecast?units=metric&q=${location}&appid=${API_KEY}`;
+
+      try {
+        const currentWeather = await getJSON(currentWeatherEndpoint);
+        displayWeather(
+          currentWeather,
+          document.querySelector('.weather-display')
+        );
+
+        const forecast = await getJSON(weatherForecastEndpoint);
+        displayForecast(
+          forecast.list,
+          document.querySelector('.weather-display > .forecast')
+        );
+      } catch (ex) {
+        console.error(`There was an error: ${ex}`);
+      }
+    }
+  });
