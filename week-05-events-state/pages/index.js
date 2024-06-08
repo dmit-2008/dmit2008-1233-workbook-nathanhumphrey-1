@@ -1,12 +1,16 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 
 export default function Home() {
   let [bgColor, setBgColor] = useState('#000');
+  let [text, setText] = useState('');
 
   function handleClick() {
-    setBgColor('#f00');
-    console.log(bgColor);
+    if (bgColor === '#000') {
+      setBgColor('#f00');
+    } else {
+      setBgColor('#000');
+    }
   }
 
   return (
@@ -25,6 +29,24 @@ export default function Home() {
             backgroundColor: bgColor,
           }}
         ></Box>
+      </Box>
+      <Box>
+        <Typography variant="h2">Text Field Example</Typography>
+        <TextField
+          variant="outlined"
+          label="Some Text"
+          id="text"
+          name="text"
+          value={text}
+          onChange={(evt) => {
+            setText(evt.target.value);
+          }}
+        />
+        {text === '' ? (
+          <Typography sx={{ color: '#f00' }}>Text cannot be empty</Typography>
+        ) : (
+          <Typography>{text}</Typography>
+        )}
       </Box>
     </Container>
   );
