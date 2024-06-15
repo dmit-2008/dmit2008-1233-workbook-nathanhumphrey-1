@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Box, Container, Typography } from '@mui/material';
 import WeatherForm from '@/components/WeatherForm';
+import CurrentWeather from '@/components/CurrentWeather';
 
 export default function Home() {
   const [weatherData, setWeatherData] = useState(null);
@@ -12,7 +13,7 @@ export default function Home() {
 
       <Box sx={{ mt: 2 }}>
         {weatherData ? (
-          <Typography>{weatherData}</Typography>
+          <CurrentWeather data={weatherData} />
         ) : (
           <Typography>Enter a location to search</Typography>
         )}
