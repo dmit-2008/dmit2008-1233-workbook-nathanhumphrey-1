@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   AppBar,
   Box,
@@ -10,6 +11,16 @@ import {
 export default function Home() {
   const QUOTE_URL = 'https://api.quotable.io/random';
 
+  const [randomQuote, setRandomQuote] = useState(null);
+
+  function getRandomQuote() {
+    fetch(QUOTE_URL)
+      .then((res) => res.json())
+      .then((json) => {
+        setRandomQuote({ author: json.author, quote: json.content });
+      });
+  }
+
   return (
     <Box component="main">
       <AppBar position="static">
@@ -20,9 +31,21 @@ export default function Home() {
       <Container maxWidth="lg" component="section">
         <Typography variant="h1">Random Quotes</Typography>
         <Box mt={4}>
-          <Button variant="contained">Get a Quote</Button>
+          <Button variant="contained" onClick={getRandomQuote}>
+            Get a Quote
+          </Button>
         </Box>
-        <Box mt={4}></Box>
+        <hr />
+        <Box mt={4}>
+          {randomQuote && (
+            <Box>
+              <Typography variant="h2">A Random Quote</Typography>
+              <Typography>
+                {randomQuote.quote} - {randomQuote.author}
+              </Typography>
+            </Box>
+          )}
+        </Box>
       </Container>
     </Box>
   );
