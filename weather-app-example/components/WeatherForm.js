@@ -25,7 +25,7 @@ export default function WeatherForm({ weatherCallback }) {
   return (
     <>
       <Typography variant="h2">Weather Form</Typography>
-      <Box component="form" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <TextField
           error={!isValidLocation}
           helperText={isValidLocation ? '' : 'Location cannot be empty'}
@@ -43,7 +43,7 @@ export default function WeatherForm({ weatherCallback }) {
         <Button type="submit" variant="contained" size="large">
           <GetApp />
         </Button>
-      </Box>
+      </form>
     </>
   );
 }
