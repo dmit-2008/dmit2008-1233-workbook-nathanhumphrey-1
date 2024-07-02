@@ -6,7 +6,7 @@ const BASE_URL = 'http://localhost:3001/quotes';
 const QuoteManager = {
   /**
    * Fetches all quotes from the backend
-   * @returns {Promise<[]>} an array of quote objects
+   * @returns {Promise<Array<{id:string, author:string, quote:string}>>} - an array of quote objects
    */
   getSavedQuotes: async function () {
     const res = await fetch(BASE_URL);
@@ -15,8 +15,8 @@ const QuoteManager = {
 
   /**
    * Creates a new quote in the backend
-   * @param {{quote, author}} quote
-   * @returns {Promise<{quote, author, id}>} the newly added quote with id
+   * @param {{quote:string, author:string}} quote - the quote to add
+   * @returns {Promise<{quote:string, author:string, id:string}>} the newly added quote with id
    */
   saveQuote: async function (quote) {
     if (!quote.quote || !quote.author) {
