@@ -1,9 +1,10 @@
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import Page from '@/components/Page';
 
 export default function About() {
   return (
-    <Box>
+    <Page>
       <Typography variant="h1">About Page</Typography>
-    </Box>
+    </Page>
   );
 }

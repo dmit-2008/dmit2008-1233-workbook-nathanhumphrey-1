@@ -1,7 +1,10 @@
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function NavBar() {
+  const router = useRouter();
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -15,6 +18,14 @@ export default function NavBar() {
         <Link href="/about">
           <Button color="inherit">About</Button>
         </Link>
+        <Button
+          color="inherit"
+          onClick={() => {
+            router.push(`/folder/${Math.random()}`);
+          }}
+        >
+          Random Param
+        </Button>
       </Toolbar>
     </AppBar>
   );
