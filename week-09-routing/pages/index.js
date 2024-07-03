@@ -1,9 +1,9 @@
 import { Box, Typography } from '@mui/material';
-
+import Page from '@/components/Page';
 export default function Home() {
   return (
-    <Box>
+    <Page>
       <Typography variant="h1">Next.js Skeleton with MUI</Typography>
-    </Box>
+    </Page>
   );
 }

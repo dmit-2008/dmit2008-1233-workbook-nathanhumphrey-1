@@ -13,7 +13,7 @@ export default function NavBar() {
           </Link>
         </Box>
         <Link href="/about">
-          <Button>About</Button>
+          <Button color="inherit">About</Button>
         </Link>
       </Toolbar>
     </AppBar>
