@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, Stack, Toolbar, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -7,25 +7,27 @@ export default function NavBar() {
 
   return (
     <AppBar position="static">
-      <Toolbar>
-        <Box sx={{ flexGrow: 1 }}>
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Box>
           <Link href="/">
             <Typography variant="h6" component="div">
-              Page Navigation
+              Page Navigation Demo
             </Typography>
           </Link>
         </Box>
-        <Link href="/about">
-          <Button color="inherit">About</Button>
-        </Link>
-        <Button
-          color="inherit"
-          onClick={() => {
-            router.push(`/folder/${Math.random()}`);
-          }}
-        >
-          Random Param
-        </Button>
+        <Stack direction="row" spacing={2}>
+          <Link href="/about">
+            <Button color="inherit">About</Button>
+          </Link>
+          <Button
+            color="inherit"
+            onClick={() => {
+              router.push(`/folder/${Math.random()}`);
+            }}
+          >
+            Random
+          </Button>
+        </Stack>
       </Toolbar>
     </AppBar>
   );

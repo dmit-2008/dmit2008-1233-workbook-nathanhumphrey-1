@@ -3,7 +3,7 @@ import Page from '@/components/Page';
 export default function Home() {
   return (
     <Page>
-      <Typography variant="h1">Next.js Skeleton with MUI</Typography>
+      <Typography variant="h1">Home Page</Typography>
     </Page>
   );
 }
