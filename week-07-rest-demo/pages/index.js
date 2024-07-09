@@ -1,31 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
-  AppBar,
   Box,
   Button,
   Container,
   LinearProgress,
-  List,
-  ListItem,
-  ListItemText,
-  Toolbar,
   Typography,
 } from '@mui/material';
 import { QuoteManager } from '@/utils/quote-manager';
+import NavBar from '@/components/NavBar';
 
 export default function Home() {
   const QUOTE_URL = 'https://api.quotable.io/random';
 
   const [randomQuote, setRandomQuote] = useState(null);
-  const [savedQuotes, setSavedQuotes] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  // Only on mount want to fetch saved quotes
-  useEffect(() => {
-    QuoteManager.getSavedQuotes().then((quotes) => {
-      setSavedQuotes(quotes);
-    });
-  }, []);
 
   function getRandomQuote() {
     setIsLoading(true);
@@ -41,11 +29,7 @@ export default function Home() {
 
   return (
     <Box component="main">
-      <AppBar position="static">
-        <Toolbar>
-          <Typography component="h1">Get You Some Quotes!</Typography>
-        </Toolbar>
-      </AppBar>
+      <NavBar />
       <Container maxWidth="lg" component="section">
         <Typography variant="h1">Random Quotes</Typography>
         <Box mt={4} mb={4}>
@@ -74,24 +58,12 @@ export default function Home() {
 
                   // Set both random quote and saved quotes for render update
                   setRandomQuote({ ...randomQuote });
-                  setSavedQuotes([...savedQuotes, randomQuote]);
                 }}
               >
                 Save Quote
               </Button>
             </Box>
           )}
-        </Box>
-        <Box mt={4}>
-          <Typography variant="h2">Previously Saved Quotes</Typography>
-          <List>
-            {savedQuotes &&
-              savedQuotes.map((q) => (
-                <ListItem key={q.id}>
-                  <ListItemText primary={q.quote} secondary={q.author} />
-                </ListItem>
-              ))}
-          </List>
         </Box>
       </Container>
     </Box>

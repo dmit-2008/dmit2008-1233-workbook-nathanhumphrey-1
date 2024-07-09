@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import {
-  AppBar,
   Box,
   Container,
   List,
   ListItem,
   ListItemText,
-  Toolbar,
   Typography,
 } from '@mui/material';
 import { QuoteManager } from '@/utils/quote-manager';
+import NavBar from '@/components/NavBar';
 
 export default function SavedQuotes() {
   const [savedQuotes, setSavedQuotes] = useState(null);
@@ -23,11 +22,7 @@ export default function SavedQuotes() {
 
   return (
     <Box component="main">
-      <AppBar position="static">
-        <Toolbar>
-          <Typography component="h1">Get You Some Quotes!</Typography>
-        </Toolbar>
-      </AppBar>
+      <NavBar />
       <Container maxWidth="lg" component="section">
         <Box mt={4}>
           <Typography variant="h2">Previously Saved Quotes</Typography>
