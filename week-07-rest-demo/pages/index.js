@@ -14,16 +14,30 @@ export default function Home() {
 
   const [randomQuote, setRandomQuote] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [quoteExists, setQuoteExists] = useState(false);
 
   function getRandomQuote() {
     setIsLoading(true);
     setRandomQuote(null);
 
+    let localAuthor;
+    let localQuote;
+
     fetch(QUOTE_URL)
       .then((res) => res.json())
       .then((json) => {
+        localAuthor = json.author;
+        localQuote = json.content;
+
+        return QuoteManager.quoteExists({
+          author: json.author,
+          quote: json.content,
+        });
+      })
+      .then((exists) => {
+        setQuoteExists(exists);
         setIsLoading(false);
-        setRandomQuote({ author: json.author, quote: json.content });
+        setRandomQuote({ author: localAuthor, quote: localQuote });
       });
   }
 
@@ -49,6 +63,7 @@ export default function Home() {
                 {randomQuote.quote} - {randomQuote.author}
               </Typography>
               <Button
+                disabled={randomQuote.id !== undefined || quoteExists}
                 variant="contained"
                 onClick={async () => {
                   // Set the returned db-generated id on our random quote

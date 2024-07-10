@@ -4,6 +4,15 @@ const BASE_URL = 'http://localhost:3001/quotes';
  * Manages the 'quotes' API with the backend
  */
 const QuoteManager = {
+  quoteExists: async function (quote) {
+    const res = await fetch(
+      `${BASE_URL}?author=${quote.author}&quote=${quote.quote}`
+    );
+    const json = await res.json();
+
+    return json.length === 1;
+  },
+
   /**
    * Fetches all quotes from the backend
    * @returns {Promise<Array<{id:string, author:string, quote:string}>>} - an array of quote objects
