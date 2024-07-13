@@ -12,28 +12,38 @@ import { QuoteManager } from '@/utils/quote-manager';
 import NavBar from '@/components/NavBar';
 
 export default function QuotesByAuthor() {
-  const router = useRouter();
-  const { author } = router.query;
-
-  const [savedQuotes, setSavedQuotes] = useState(null);
 
   function toProperNameCase(name) {
     return name.split('-').map(word => word.charAt(0).toUpperCase() + word.substr(1)).join(' ');
   }
 
-  // Only on mount want to fetch saved quotes
+  const router = useRouter();
+  const { author } = router.query;
+
+  const [savedQuotes, setSavedQuotes] = useState(null);
+
+  // Required on fresh page load to ensure the router.query object is ready
+  const [isNameSet, setIsNameSet] = useState(false);
+
+  // Once the router is ready, fetch quotes by the wildcard author
+  // See: https://nextjs.org/docs/pages/api-reference/functions/use-router 
   useEffect(() => {
-    QuoteManager.getSavedQuotesByAuthor(toProperNameCase(author)).then((quotes) => {
-      setSavedQuotes(quotes);
-    });
-  }, []);
+
+    if (router.isReady) {
+      QuoteManager.getSavedQuotesByAuthor(toProperNameCase(author)).then((quotes) => {
+        setSavedQuotes(quotes);
+      });
+      setIsNameSet(true);
+    }
+
+  }, [router.isReady]); // Run when router.isReady updates
 
   return (
     <Box component="main">
       <NavBar />
       <Container maxWidth="lg" component="section">
         <Box mt={4}>
-          <Typography variant="h2">Saved Quotes from {toProperNameCase(author)}</Typography>
+          <Typography variant="h2">Saved Quotes {isNameSet && `from ${toProperNameCase(author)}`}</Typography>
           <List>
             {savedQuotes &&
               savedQuotes.map((q) => (
