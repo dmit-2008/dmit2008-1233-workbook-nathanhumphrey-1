@@ -1,0 +1,8 @@
+body {
+  background-color: #f9f9f9;
+}
+
+.MuiToolbar-root a {
+  color: inherit;
+  text-decoration: none;
+}
