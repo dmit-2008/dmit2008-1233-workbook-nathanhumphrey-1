@@ -77,3 +77,17 @@ beforeAll(() => {
 afterAll(() => {
   server.close();
 });
+
+// Tests for QuoteManager
+describe('QuoteManager', () => {
+  test('getRandomQuote returns a random quote object', async () => {
+    // Arrange
+    let randomQuote;
+
+    // Act
+    randomQuote = await QuoteManager.getRandomQuote();
+
+    // Assert
+    expect(randomQuote).toEqual({ author: AUTHOR, quote: QUOTE });
+  });
+});
