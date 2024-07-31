@@ -90,4 +90,40 @@ describe('QuoteManager', () => {
     // Assert
     expect(randomQuote).toEqual({ author: AUTHOR, quote: QUOTE });
   });
+
+  // TODO: add a describe() for the quoteExists and create two tests (one for exists, and one for not exists)
+  test('quoteExists correctly determines if a quote exists in the backend', async () => {
+    // Arrange
+    let exists;
+    let doesNotExist;
+
+    // Act
+    exists = await QuoteManager.quoteExists(SAVED_QUOTES[0]);
+    doesNotExist = await QuoteManager.quoteExists({
+      author: AUTHOR,
+      quote: QUOTE,
+    });
+
+    // Assert
+    expect(exists).toBe(true);
+    expect(doesNotExist).not.toBe(true);
+  });
+
+  // TODO: getQuotesByAuthor
+
+  // TODO: getSavedQuotes
+
+  test('saveQuote correctly saves a quote in the backend', async () => {
+    // Arrange
+    let quoteToSave = { author: AUTHOR, quote: QUOTE };
+    let expectedId = SAVED_QUOTES.length + 1;
+    let savedQuote;
+
+    // Act
+    savedQuote = await QuoteManager.saveQuote(quoteToSave);
+
+    // Assert
+    expect(savedQuote).toHaveProperty('id', expectedId);
+    expect(savedQuote).toMatchObject(quoteToSave);
+  });
 });
